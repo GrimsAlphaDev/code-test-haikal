@@ -1,4 +1,4 @@
-@extends('customer.layout.app')
+@extends('merchant.layout.app')
 
 @section('title')
     Order
@@ -14,9 +14,9 @@
         <h1 class="text-2xl font-semibold text-gray-700">Menu</h1>
 
         <!-- Modal Trigger Button -->
-        <a href=""
+        <a href="{{ route('merchant.menu.create') }}"
             class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 mb-2">
-            Add New Order
+            Add New Menu
         </a>
     </div>
     <hr>
@@ -42,7 +42,46 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    
+                    @foreach ($orders as $order)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $order->customer->company_name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($order->total_price, 2, ',', '.') }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if ($order->invoice == null)
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Unpaid
+                                    </span>
+                                @else
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        <a href="">
+                                            Paid
+                                        </a>
+                                    </span>
+                                @endif
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span
+                                    class="
+                                    px-2 py-1 rounded-full text-xs font-medium 
+                                    {{ $order->status->name == 'pending'
+                                        ? 'bg-yellow-100 text-yellow-800'
+                                        : ($order->status->name == 'completed'
+                                            ? 'bg-green-100 text-green-800'
+                                            : 'bg-red-100 text-red-800') }}
+                                ">
+                                    {{ $order->status->name }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <a href="{{ route('merchant.order.show', $order->id) }}"
+                                    class="text-blue-500 hover:text-blue-700">Detail</a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

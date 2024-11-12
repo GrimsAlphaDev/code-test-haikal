@@ -42,4 +42,10 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    // Relasi many to many dengan tabel menus
+    public function menus()
+    {
+        return $this->belongsToMany(Menu::class, 'order_items', 'order_id', 'menu_id')->withPivot('quantity');
+    }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('merchant_id')->constrained()->onDelete('cascade');
             $table->date('delivery_date');
             $table->string('payment_proof')->nullable();
-            $table->decimal('total_price', 10, 2);
+            $table->decimal('total_price', 10, 2)->nullable();
             $table->text('invoice')->nullable();
             $table->timestamps();
         });

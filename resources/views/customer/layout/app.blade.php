@@ -23,7 +23,7 @@
 <body class="relative overflow-auto max-h-screen">
 
 
-    @include('merchant.layout.sidebar')
+    @include('customer.layout.sidebar')
 
     <main class="p-4 sm:ml-64">
         @yield('content')
