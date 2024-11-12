@@ -42,7 +42,45 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    
+                    @foreach ($order as $o)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $o->id }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $o->customer->company_name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($o->total_price, 2, ',', '.') }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if ($o->status_id == 1)
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Unpaid
+                                    </span>
+                                @else
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        <a href="">
+                                            Paid
+                                        </a>
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if ($o->invoice == null)
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Unpaid
+                                    </span>
+                                @else
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        <a href="{{ route('viewInvoice', $o->id) }}">
+                                            View
+                                        </a>
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <a href="{{ route('customer.order.pay', $o->id) }}"
+                                    class="text-indigo-600 hover:text-indigo-900">Pay Order</a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

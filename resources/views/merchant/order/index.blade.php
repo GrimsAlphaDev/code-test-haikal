@@ -50,7 +50,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($order->total_price, 2, ',', '.') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @if ($order->invoice == null)
+                                @if ($order->status_id == 1)
                                     <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         Unpaid
                                     </span>
@@ -64,17 +64,17 @@
                             </td>
 
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span
-                                    class="
-                                    px-2 py-1 rounded-full text-xs font-medium 
-                                    {{ $order->status->name == 'pending'
-                                        ? 'bg-yellow-100 text-yellow-800'
-                                        : ($order->status->name == 'completed'
-                                            ? 'bg-green-100 text-green-800'
-                                            : 'bg-red-100 text-red-800') }}
-                                ">
-                                    {{ $order->status->name }}
-                                </span>
+                                @if ($order->invoice == null)
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Unpaid
+                                    </span>
+                                @else
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        <a href="{{ route('viewInvoice', $order->id) }}">
+                                            View
+                                        </a>
+                                    </span>
+                                @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <a href="{{ route('merchant.order.show', $order->id) }}"

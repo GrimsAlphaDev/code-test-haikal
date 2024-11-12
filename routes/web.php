@@ -44,6 +44,7 @@ Route::prefix('merchant')->middleware('merchant')->group(function () {
     Route::get('/order/{id}', [MerchantOrderController::class, 'show'])->name('merchant.order.show');
 
 });
+Route::get('/viewInvoice/{id}', [MerchantOrderController::class, 'view'])->name('viewInvoice');
 
 Route::prefix('customer')->middleware('customer')->group(function () {
     Route::get('/cathering', [CustomerCatheringController::class, 'index'])->name('customer.cathering');
@@ -52,5 +53,7 @@ Route::prefix('customer')->middleware('customer')->group(function () {
     Route::get('/order', [CustomerOrderController::class, 'index'])->name('customer.order');
     Route::get('/order/create', [CustomerOrderController::class, 'create'])->name('customer.order.create');
     Route::post('/order', [CustomerOrderController::class, 'store'])->name('customer.order.store');
+    Route::get('/pay/{id}', [CustomerOrderController::class, 'pay'])->name('customer.order.pay');
+
 });
 
