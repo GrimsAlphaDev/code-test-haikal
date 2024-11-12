@@ -12,22 +12,25 @@ class Order extends Model
 
     protected $fillable = [
         'customer_id',
-        'menu_id',
-        'quantity',
-        'total',
+        'status_id',
+        'delivery_date',
+        'payment_proof',
+        'total_price',
     ];
 
+    // Relasi dengan tabel customers
     public function customer()
     {
         return $this->belongsTo(Customer::class);
     }
 
-    public function menu()
+    // Relasi dengan tabel order_statuses
+    public function status()
     {
-        return $this->belongsTo(Menu::class);
+        return $this->belongsTo(OrderStatus::class, 'status_id');
     }
 
-
+    // Relasi dengan tabel order_items
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);

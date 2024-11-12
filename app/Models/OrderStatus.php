@@ -9,4 +9,15 @@ class OrderStatus extends Model
 {
     /** @use HasFactory<\Database\Factories\OrderStatusFactory> */
     use HasFactory;
+
+    
+    protected $fillable = [
+        'name',
+    ];
+
+    // Relasi dengan tabel orders
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
