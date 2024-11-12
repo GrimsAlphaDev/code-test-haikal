@@ -16,6 +16,7 @@
                 <h2 class="text-lg font-semibold text-gray-700">Personal Information</h2>
                 <div class="mt-4">
                     <p class="text-gray-600">Company Name: <span class="font-semibold">{{ $user->company_name }}</span></p>
+                    <p class="text-gray-600">Food Type: <span class="font-semibold">{{ $user->food_type }}</span></p>
                     <p class="text-gray-600">Email: <span class="font-semibold">{{ $user->email }}</span></p>
                     <p class="text-gray-600">Contact: <span class="font-semibold">{{ $user->contact }}</span></p>
                     <p class="text-gray-600">Description: <span class="font-semibold">{{ $user->description }}</span></p>
@@ -36,6 +37,12 @@
                     @error('name')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
+                    <div class="mt-4">
+                        <label for="food_type" class="text-gray-600">Food Type</label>
+                        <input type="text" name="food_type" id="food_type"
+                            class="w-full border rounded-md p-2 mt-1 @error('food_type') border-red-500 @else border-gray-300 @enderror"
+                            value="{{ $user->food_type }}">
+                    </div>
                     <div class="mt-4">
                         <label for="email" class="text-gray-600">Email</label>
                         <input type="email" name="email" id="email"

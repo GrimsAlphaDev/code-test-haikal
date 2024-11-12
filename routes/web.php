@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Merchant\DashboardMerchantController;
 use App\Http\Controllers\Merchant\MenuMerchantController;
+use App\Http\Controllers\Merchant\MerchantOrderController;
 use App\Http\Controllers\Merchant\ProfileMerchantController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,10 @@ Route::prefix('merchant')->middleware('merchant')->group(function () {
     Route::get('/menu/{id}/edit', [MenuMerchantController::class, 'edit'])->name('merchant.menu.edit');
     Route::put('/menu/{id}', [MenuMerchantController::class, 'update'])->name('merchant.menu.update');
     Route::delete('/menu/{id}', [MenuMerchantController::class, 'destroy'])->name('merchant.menu.delete');
+
+    // order Merchant
+    Route::get('/order', [MerchantOrderController::class, 'index'])->name('merchant.order');
+    Route::get('/order/{id}', [MerchantOrderController::class, 'show'])->name('merchant.order.show');
 
 });
 

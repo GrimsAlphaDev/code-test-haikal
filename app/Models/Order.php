@@ -14,6 +14,7 @@ class Order extends Model
         'customer_id',
         'status_id',
         'delivery_date',
+        'merchant_id',
         'payment_proof',
         'total_price',
     ];
@@ -22,6 +23,12 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    // Relasi dengan tabel merchants
+    public function merchant()
+    {
+        return $this->belongsTo(Merchant::class);
     }
 
     // Relasi dengan tabel order_statuses

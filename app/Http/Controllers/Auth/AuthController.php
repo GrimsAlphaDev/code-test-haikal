@@ -43,7 +43,7 @@ class AuthController extends Controller
             // Regenerasi session
             $request->session()->regenerate();
 
-            return redirect()->route('merchant.dashboard')->with('success', 'Login successful');
+            return redirect()->route('merchant.menu')->with('success', 'Login successful');
         }
 
         $customer = Customer::where('email', $request->email)->first();

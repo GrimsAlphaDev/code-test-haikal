@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->foreignId('status_id')->constrained('order_statuses')->onDelete('cascade');
+            $table->foreignId('merchant_id')->constrained()->onDelete('cascade');
             $table->date('delivery_date');
             $table->string('payment_proof')->nullable();
             $table->decimal('total_price', 10, 2);

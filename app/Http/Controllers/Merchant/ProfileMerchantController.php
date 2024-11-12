@@ -19,6 +19,7 @@ class ProfileMerchantController extends Controller
 
         $request->validate([
             'company_name' => 'required',
+            'food_type' => 'required',
             'address' => 'required',
             'contact' => 'required',
             'description' => 'required',
@@ -32,6 +33,7 @@ class ProfileMerchantController extends Controller
         }
         $merchant->update([
             'company_name' => $request->company_name,
+            'food_type' => $request->food_type,
             'address' => $request->address,
             'contact' => $request->contact,
             'description' => $request->description,

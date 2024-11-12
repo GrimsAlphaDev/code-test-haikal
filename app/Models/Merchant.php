@@ -14,8 +14,10 @@ class Merchant extends Authenticatable
     protected $fillable = [
         'company_name',
         'address',
+        'food_type',
         'contact',
         'description',
+        'city',
         'email',
         'password',
     ];

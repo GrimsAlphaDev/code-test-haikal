@@ -17,6 +17,7 @@ class OrderSeeder extends Seeder
         $order1 = Order::create([
             'customer_id' => 1,
             'status_id' => 1,
+            'merchant_id' => 1,
             'delivery_date' => '2024-11-12',
             'payment_proof' => 'images/defaultFood.png',
             'total_price' => 15000
@@ -39,6 +40,7 @@ class OrderSeeder extends Seeder
         $order2 = Order::create([
             'customer_id' => 2,
             'status_id' => 2,
+            'merchant_id' => 2,
             'delivery_date' => '2024-11-12',
             'payment_proof' => 'images/defaultFood.png',
             'total_price' => 20000
