@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Customer\CustomerCatheringController;
 use App\Http\Controllers\Merchant\DashboardMerchantController;
 use App\Http\Controllers\Merchant\MenuMerchantController;
 use App\Http\Controllers\Merchant\MerchantOrderController;
@@ -44,9 +45,7 @@ Route::prefix('merchant')->middleware('merchant')->group(function () {
 });
 
 Route::prefix('customer')->middleware('customer')->group(function () {
-    // Route::get('/dashboard', [AuthController::class, 'dashboardCustomer'])->name('customer.dashboard');
-    Route::get('/dashboard', function(){
-        return "Customer Dashboard";
-    })->name('customer.dashboard');
+    Route::get('/cathering', [CustomerCatheringController::class, 'index'])->name('customer.cathering');
+    Route::get('/cathering/{id}', [CustomerCatheringController::class, 'show'])->name('customer.cathering.show');
 });
 

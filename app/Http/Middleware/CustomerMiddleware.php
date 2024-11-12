@@ -16,7 +16,7 @@ class CustomerMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user() instanceof \App\Models\Customer) {
+        if (Auth::guard('customer')->check() && Auth::guard('customer')->user()) {
             return $next($request);
         }
 

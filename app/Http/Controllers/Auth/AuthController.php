@@ -47,13 +47,13 @@ class AuthController extends Controller
         }
 
         $customer = Customer::where('email', $request->email)->first();
-        if ($customer) {
-            if (Hash::check($request->password, $customer->password)) {
-                if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                    $request->session()->regenerate();
-                    return redirect()->route('customer.dashboard')->with('success', 'Login successful');
-                }
-            }
+        if ($customer && Hash::check($request->password, $customer->password)) {
+            // Login dengan guard merchant
+            Auth::guard('customer')->login($customer);
+            // Regenerasi session
+            $request->session()->regenerate();
+
+            return redirect()->route('customer.cathering')->with('success', 'Login successful');
         }
 
 
