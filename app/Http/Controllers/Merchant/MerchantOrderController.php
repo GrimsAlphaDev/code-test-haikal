@@ -23,4 +23,16 @@ class MerchantOrderController extends Controller
 
         return view('merchant.order.show', compact('order', 'totalPrice'));
     }
+
+    public function view($id)
+    {
+        $order = Order::find($id);
+
+        // view invoice
+        // decode base64 to pdf
+        $pdf = base64_decode($order->invoice);
+        return response($pdf)
+            ->header('Content-Type', 'application/pdf');
+            
+    }
 }
