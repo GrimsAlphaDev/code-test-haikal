@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/output.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <title>Tailwind</title>
+    <link rel="icon" href="{{ asset('Images/icon.png') }}" type="image/icon type">
+    <title>Mealmate | Register</title>
 </head>
 
 <body class="bg-gray-100">
@@ -17,6 +18,18 @@
                     class="border border-gray-300 rounded-lg p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-md:mx-auto">
                     <form class="space-y-4" action="{{ route('signUp') }}" method="POST">
                         @csrf
+
+                        <a href="{{ route('landing') }}"
+                            class="flex items-center text-gray-800 text-sm hover:underline">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
+                                class="w-[18px] h-[18px] me-2" viewBox="0 0 24 24">
+                                <path
+                                    d="M20 11H7.41l5.3-5.29a1 1 0 0 0-1.42-1.42l-7 7a1 1 0 0 0 0 1.42l7 7a1 1 0 0 0 1.42-1.42L7.41 13H20a1 1 0 0 0 0-2z"
+                                    data-original="#000000"></path>
+                            </svg>
+                            <span class="hover:cursor-pointer text-gray-800 text-sm">Back to landing page</span>
+                        </a>
+
                         <div class="mb-8">
                             <h3 class="text-gray-800 text-3xl font-extrabold">Sign Up</h3>
                             <p class="text-gray-500 text-sm mt-4 leading-relaxed">

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/output.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <title>Tailwind</title>
+    <link rel="icon" href="{{ asset('Images/icon.png') }}" type="image/icon type">
+    <title>Mailmate | Login</title>
 </head>
 
 <body class="bg-gray-100">
@@ -18,7 +19,6 @@
                     <form class="space-y-4" action="{{ route('signIn') }}" method="POST">
                         @csrf
 
-                        {{-- icon arrow left with word back to landing page --}}
                         <a href="{{ route('landing') }}"
                             class="flex items-center text-gray-800 text-sm hover:underline">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
@@ -28,7 +28,7 @@
                                     data-original="#000000"></path>
                             </svg>
                             <span class="hover:cursor-pointer text-gray-800 text-sm">Back to landing page</span>
-                            </a>
+                        </a>
 
                         <div class="mb-8">
                             <h3 class="text-gray-800 text-3xl font-extrabold">Sign in</h3>
