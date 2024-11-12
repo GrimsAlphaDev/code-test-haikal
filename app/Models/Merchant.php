@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Merchant extends Model
+class Merchant extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'company_name',
@@ -16,6 +18,11 @@ class Merchant extends Model
         'description',
         'email',
         'password',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
     // Relasi dengan tabel menus
@@ -29,4 +36,6 @@ class Merchant extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('delivery_date');
             $table->string('payment_proof')->nullable();
             $table->decimal('total_price', 10, 2);
+            $table->text('invoice')->nullable();
             $table->timestamps();
         });
     }
