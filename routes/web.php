@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Merchant\DashboardMerchantController;
+use App\Http\Controllers\Merchant\ProfileMerchantController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,10 +21,9 @@ Route::middleware('customGuest')->group(function () {
 
 // prefix for merchant
 Route::prefix('merchant')->middleware('merchant')->group(function () {
-    // Route::get('/dashboard', [AuthController::class, 'dashboardMerchant'])->name('merchant.dashboard');
-    Route::get('/dashboard', function(){
-        return "Merchant Dashboard";
-    })->name('merchant.dashboard');
+    Route::get('/dashboard', [DashboardMerchantController::class, 'index'])->name('merchant.dashboard');
+    Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
+    Route::put('/profile', [ProfileMerchantController::class, 'update'])->name('merchant.profile.update');
 });
 
 Route::prefix('customer')->middleware('customer')->group(function () {

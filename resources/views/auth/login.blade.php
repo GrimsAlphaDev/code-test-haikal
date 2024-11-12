@@ -101,8 +101,6 @@
             </div>
         </div>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    {{-- Tambahkan script untuk menampilkan alert --}}
     @include('components.alert')
     <script>
         function togglePasswordVisibility() {

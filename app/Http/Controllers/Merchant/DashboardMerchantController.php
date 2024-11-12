@@ -9,6 +9,6 @@ class DashboardMerchantController extends Controller
 {
     public function index()
     {
-        return view('merchant.dashboard');
+        return view('merchant.dashboard.index');
     }
 }
