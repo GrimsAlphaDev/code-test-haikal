@@ -15,11 +15,12 @@
             color: #2563eb;
             border-radius: 12px;
         }
+        
     </style>
     @yield('styles')
 </head>
 
-<body class="relative  overflow-hidden max-h-screen">
+<body class="relative overflow-auto max-h-screen">
 
 
     @include('merchant.layout.sidebar')

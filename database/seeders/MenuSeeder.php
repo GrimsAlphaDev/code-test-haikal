@@ -19,7 +19,7 @@ class MenuSeeder extends Seeder
             'name' => 'Nasi Goreng',
             'price' => 15000,
             'description' => 'Nasi goreng dengan bumbu yang pas.',
-            'photo' => 'images/defaultFood.png'
+            'photo' => 'defaultFood.png'
         ]);
 
         Menu::create([
@@ -27,7 +27,7 @@ class MenuSeeder extends Seeder
             'name' => 'Mie Goreng',
             'price' => 15000,
             'description' => 'Mie goreng dengan bumbu yang pas.',
-            'photo' => 'images/defaultFood.png'
+            'photo' => 'defaultFood.png'
         ]);
 
         Menu::create([
@@ -35,7 +35,7 @@ class MenuSeeder extends Seeder
             'name' => 'Nasi Ayam',
             'price' => 20000,
             'description' => 'Nasi ayam dengan bumbu yang pas.',
-            'photo' => 'images/defaultFood.png'
+            'photo' => 'defaultFood.png'
         ]);
 
         Menu::create([
@@ -43,7 +43,7 @@ class MenuSeeder extends Seeder
             'name' => 'Mie Ayam',
             'price' => 20000,
             'description' => 'Mie ayam dengan bumbu yang pas.',
-            'photo' => 'images/defaultFood.png'
+            'photo' => 'defaultFood.png'
         ]);
 
         Menu::create([
@@ -51,7 +51,7 @@ class MenuSeeder extends Seeder
             'name' => 'Nasi Uduk',
             'price' => 20000,
             'description' => 'Nasi uduk dengan bumbu yang pas.',
-            'photo' => 'images/defaultFood.png'
+            'photo' => 'defaultFood.png'
         ]);
 
         Menu::create([
@@ -59,7 +59,7 @@ class MenuSeeder extends Seeder
             'name' => 'Mie Tektek',
             'price' => 20000,
             'description' => 'Mie uduk dengan bumbu yang pas.',
-            'photo' => 'images/defaultFood.png'
+            'photo' => 'defaultFood.png'
         ]);
 
         Menu::create([
@@ -67,7 +67,7 @@ class MenuSeeder extends Seeder
             'name' => 'Nasi Kuning',
             'price' => 20000,
             'description' => 'Nasi kuning dengan bumbu yang pas.',
-            'photo' => 'images/defaultFood.png'
+            'photo' => 'defaultFood.png'
         ]);
 
         Menu::create([
@@ -75,7 +75,7 @@ class MenuSeeder extends Seeder
             'name' => 'Kwetiau',
             'price' => 20000,
             'description' => 'Kwetiau dengan bumbu yang pas.',
-            'photo' => 'images/defaultFood.png'
+            'photo' => 'defaultFood.png'
         ]);
     }
 }
