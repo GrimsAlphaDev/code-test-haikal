@@ -13,13 +13,31 @@
     class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
     aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-        {{-- place text Merchant --}}
         <div class="flex mt-2 items-center justify-center mb-2 ">
-            <h2 class="text-2xl font-semibold text-center text-gray-800 dark:text-white">Merchant</h2>
+            <img src="{{ asset('images/icon.png') }}" alt="logo" class="bg-neutral-200 rounded-full w-32 h-32">
         </div>
-        <hr class="mb-6">
+        <hr class="mb-1">
+            {{-- name of the merchant --}}
+            <div class="flex flex-col items-center space-x-2 justify-center">
+                <h2 class="text-lg font-semibold dark:text-white">{{ auth()->guard('merchant')->user()->company_name }}</h2>
+                <p class="text-xs text-gray-500 dark:text-gray-400">({{ auth()->guard('merchant')->user()->email }})</p>
+            </div>
+        <hr class="mt-2 mb-4">
         <ul class="space-y-2 font-medium">
-            <li @if(request()->routeIs('merchant.menu')) class="active" @endif>
+            <li @if (request()->routeIs('merchant.dashboard')) class="active" @endif>
+                <a href="{{ route('merchant.dashboard') }}"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-grid" width="18" height="18" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z"></path>
+                        <rect x="4" y="4" width="6" height="6" rx="1"></rect>
+                        <rect x="14" y="4" width="6" height="6" rx="1"></rect>
+                        <rect x="4" y="14" width="6" height="6" rx="1"></rect>
+                        <rect x="14" y="14" width="6" height="6" rx="1"></rect>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap">Dashboard</span>
+                </a>
+            </li>
+            <li @if (request()->routeIs('merchant.menu')) class="active" @endif>
                 <a href="{{ route('merchant.menu') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -30,7 +48,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Menu</span>
                 </a>
             </li>
-            <li @if(request()->routeIs('merchant.order')) class="active" @endif>
+            <li @if (request()->routeIs('merchant.order')) class="active" @endif>
                 <a href="{{ route('merchant.order') }}"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -41,33 +59,7 @@
                     <span class="flex-1 ms-3 whitespace-nowrap">Orders</span>
                 </a>
             </li>
-            <li @if(request()->routeIs('merchant.profile')) class="active" @endif>
-                <a href="{{ route('merchant.profile') }}"
-                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                        <path
-                            d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
-                    </svg>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
-                </a>
-            </li>
             
-            <li>
-                {{-- logout --}}
-                <form action="{{ route('logout') }}" method="get">
-                    @csrf
-                    <button type="submit" onclick="return confirm('Are you sure?')"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                d="M10 0a10 10 0 1 0 10 10 10.011 10.011 0 0 0-10-10Zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8ZM11 5a1 1 0 0 0-1 1v8a1 1 0 0 0 2 0V6a1 1 0 0 0-1-1Z" />
-                        </svg>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
-                    </button>
-                </form>
-            </li>
         </ul>
 
         <button data-drawer-toggle="sidebar-multi-level-sidebar" aria-controls="sidebar-multi-level-sidebar"

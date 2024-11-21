@@ -29,4 +29,14 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function countCart()
+    {
+        return $this->cart->where('status', 'pending')->count();
+    }
 }

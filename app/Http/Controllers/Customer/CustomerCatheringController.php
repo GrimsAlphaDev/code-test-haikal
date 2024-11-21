@@ -12,7 +12,6 @@ class CustomerCatheringController extends Controller
     public function index()
     {
         $catherings = Merchant::all();
-        // from $catherings create distinct food type and city
         $foodTypes = $catherings->pluck('food_type')->unique();
         $cities = $catherings->pluck('city')->unique();
 

@@ -5,10 +5,8 @@
 @endsection
 
 @section('content')
-    <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700">Menu</h1>
-
-        
+    <div class="flex justify-between items-center mb-2">
+        <h1 class="text-2xl font-semibold text-gray-700">List Cathering</h1>
     </div>
     <hr>
 
@@ -55,9 +53,10 @@
                         <p class=" font-normal text-gray-700 dark:text-gray-400">Address : {{ $merchant->address }}</p>
                         <p class=" font-normal text-gray-700 dark:text-gray-400">Contact : {{ $merchant->contact }}</p>
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">City : {{ $merchant->city }}</p>
-                        <div class="mt-auto flex items-center justify-between">
+                        <div class="mt-auto flex items-center justify-between mx-auto border-t border-gray-200 pt-3 ">
                             <a href="{{ route('customer.cathering.show', $merchant->id) }}"
-                                class="text-blue-500 hover:text-blue-700">Lihat Menu</a>
+                                class="text-blue-500 hover:text-blue-700 px-10 bg-blue-200 hover:bg-blue-500 py-2 rounded-lg text-center uppercase font-bold
+                                ">Lihat Menu</a>
                         </div>
                     </div>
                 </div>

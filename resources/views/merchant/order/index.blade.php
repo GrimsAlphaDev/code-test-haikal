@@ -111,6 +111,19 @@
                                             class=" hover:text-red-700 bg-red-100 text-red-500 px-2 py-1 rounded-md text-xs font-medium uppercase ">Cancel</button>
                                     </form>
                                 @endif
+                                @if ($order->status_id == 2)
+                                    {{-- button to update status to on process --}}
+                                    <form action="{{ route('merchant.order.updateStatus', $order->id) }}" method="POST"
+                                        class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="status_id" value="3">
+                                        <button type="submit"
+                                            onclick="return confirm('Are you sure want to update this order to on process ?')"
+                                            class="hover:text-green-700 bg-green-100 text-green-500 px-2 py-1 rounded-md text-xs font-medium uppercase ">
+                                            Complete Order</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
