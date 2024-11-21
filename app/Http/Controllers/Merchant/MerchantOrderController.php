@@ -53,4 +53,54 @@ class MerchantOrderController extends Controller
 
         return redirect()->route('merchant.order')->with('success', 'Order canceled successfully');
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $order = Order::find($id);
+
+        if($request->status_id == 2){
+            // create invoice
+            $this->invoice($id);
+        }   
+
+        $order->status_id = $request->status_id;
+        $order->save();
+
+        return redirect()->route('merchant.order')->with('success', 'Order status updated successfully');
+    }
+
+    // create pdf invoice
+    public function invoice($id)
+    {
+        $order = Order::with(['customer', 'menus'])->findOrFail($id);
+
+        // Hitung total harga
+        $totalPrice = $order->menus->sum(function ($menu) {
+            return $menu->price * $menu->pivot->quantity;
+        });
+
+        // Generate PDF
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('pdf', [
+            'order' => $order,
+            'totalPrice' => $totalPrice
+        ]);
+
+        // convert pdf to base64
+        $pdf_base64 = base64_encode($pdf->output());
+        // save pdf to order
+        $order->invoice = $pdf_base64;
+        $order->save();
+    }
+
+    public function viewInvoice($id)
+    {
+        $order = Order::find($id);
+
+        // view invoice
+        // decode base64 to pdf
+        $pdf = base64_decode($order->invoice);
+        return response($pdf)
+            ->header('Content-Type', 'application/pdf');
+    }
 }

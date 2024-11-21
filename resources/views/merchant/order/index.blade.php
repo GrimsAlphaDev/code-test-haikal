@@ -74,13 +74,10 @@
                                     <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         Invoice Not Available Yet
                                     </span>
-                                @elseif ($order->status_id == 2)
-                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                        Invoice Not Available Yet
-                                    </span>
-                                @elseif ($order->status_id == 3)
+                                
+                                @elseif ($order->status_id == 3 || $order->status_id == 2)
                                     <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        <a href="{{ route('viewInvoice', $order->id) }}">
+                                        <a href="{{ route('merchant.order.viewInvoice', $order->id) }}" target="_blank">
                                             View
                                         </a>
                                     </span>
@@ -94,6 +91,17 @@
                                 <a href="{{ route('merchant.order.show', $order->id) }}"
                                     class="text-blue-500 hover:text-blue-700 bg-blue-100 px-2 py-1 rounded-md text-xs font-medium uppercase ">Detail</a>
                                 @if ($order->status_id == 1)
+                                    {{-- button to update status to on process --}}
+                                    <form action="{{ route('merchant.order.updateStatus', $order->id) }}" method="POST"
+                                        class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="status_id" value="2">
+                                        <button type="submit"
+                                            onclick="return confirm('Are you sure want to update this order to on process ?')"
+                                            class="hover:text-green-700 bg-green-100 text-green-500 px-2 py-1 rounded-md text-xs font-medium uppercase ">
+                                            Process</button>
+                                    </form>
                                     <form action="{{ route('merchant.order.cancel', $order->id) }}" method="POST"
                                         class="inline">
                                         @csrf

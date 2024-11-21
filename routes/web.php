@@ -47,9 +47,12 @@ Route::prefix('merchant')->middleware('merchant')->group(function () {
     Route::get('/order', [MerchantOrderController::class, 'index'])->name('merchant.order');
     Route::get('/order/{id}', [MerchantOrderController::class, 'show'])->name('merchant.order.show');
     Route::delete('/order/cancel/{id}', [MerchantOrderController::class, 'cancel'])->name('merchant.order.cancel');
+    Route::put('/order/updateStatus/{id}', [MerchantOrderController::class, 'updateStatus'])->name('merchant.order.updateStatus');
+    Route::get('/order/viewInvoice/{id}', [MerchantOrderController::class, 'viewInvoice'])->name('merchant.order.viewInvoice');
     
 });
-Route::get('/viewInvoice/{id}', [MerchantOrderController::class, 'view'])->name('viewInvoice');
+
+
 
 Route::prefix('customer')->middleware('customer')->group(function () {
 
@@ -62,9 +65,9 @@ Route::prefix('customer')->middleware('customer')->group(function () {
     Route::get('/order/create', [CustomerOrderController::class, 'create'])->name('customer.order.create');
     Route::get('/order/{id}', [CustomerOrderController::class, 'show'])->name('customer.order.show');
     Route::post('/order', [CustomerOrderController::class, 'store'])->name('customer.order.store');
-    Route::get('/pay/{id}', [CustomerOrderController::class, 'pay'])->name('customer.order.pay');
     Route::post('/checkout', [CustomerOrderController::class, 'checkout'])->name('customer.order.checkout');
     Route::delete('/order/cancel/{id}', [CustomerOrderController::class, 'cancel'])->name('customer.order.cancel');
+    Route::get('/order/viewInvoice/{id}', [CustomerOrderController::class, 'viewInvoice'])->name('customer.order.viewInvoice');
     
 
     // cart

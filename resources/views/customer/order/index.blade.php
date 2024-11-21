@@ -77,13 +77,9 @@
                                     <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         Invoice Not Available Yet
                                     </span>
-                                @elseif ($o->status_id == 2)
-                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                        Invoice Not Available Yet
-                                    </span>
-                                @elseif ($o->status_id == 3)
+                                @elseif ($o->status_id == 2 || $o->status_id == 3)
                                     <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        <a href="{{ route('viewInvoice', $o->id) }}">
+                                        <a href="{{ route('customer.order.viewInvoice', $o->id) }}" target="_blank">
                                             View
                                         </a>
                                     </span>
@@ -96,8 +92,9 @@
                             <td class="px-6 py-4 whitespace-nowrap flex flex-row gap-2">
                                 <a href="{{ route('customer.order.show', $o->id) }}"
                                     class="text-black hover:text-blue-700 bg-blue-100 px-2 py-1 rounded-md text-xs font-medium uppercase ">Detail</a>
+
                                 @if ($o->status_id == 1)
-                                    <form action="{{ route('customer.order.cancel', $o->id) }}" method="POST"
+                                <form action="{{ route('customer.order.cancel', $o->id) }}" method="POST"
                                         class="inline">
                                         @csrf
                                         @method('DELETE')

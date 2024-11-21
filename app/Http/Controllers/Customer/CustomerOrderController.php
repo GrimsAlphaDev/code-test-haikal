@@ -69,41 +69,6 @@ class CustomerOrderController extends Controller
         return true;
     }
 
-    public function pay($id)
-    {
-        $order = Order::find($id);
-        $order->status_id = 2;
-        $order->save();
-
-        $this->invoice($id);
-
-        return redirect()->route('customer.order')->with('success', 'Order paid successfully');
-    }
-
-    // create pdf invoice
-    public function invoice($id)
-    {
-        $order = Order::with(['customer', 'menus'])->findOrFail($id);
-
-        // Hitung total harga
-        $totalPrice = $order->menus->sum(function ($menu) {
-            return $menu->price * $menu->pivot->quantity;
-        });
-
-        // Generate PDF
-        $pdf = app('dompdf.wrapper');
-        $pdf->loadView('pdf', [
-            'order' => $order,
-            'totalPrice' => $totalPrice
-        ]);
-
-        // convert pdf to base64
-        $pdf_base64 = base64_encode($pdf->output());
-        // save pdf to order
-        $order->invoice = $pdf_base64;
-        $order->save();
-    }
-
     public function checkout(Request $request)
     {
         try {
@@ -161,5 +126,14 @@ class CustomerOrderController extends Controller
         $order->save();
 
         return redirect()->route('customer.order')->with('success', 'Order canceled successfully');
+    }
+
+    public function viewInvoice($id)
+    {
+        $order = Order::find($id);
+        // decode base64 to pdf
+        $pdf = base64_decode($order->invoice);
+        return response($pdf)
+            ->header('Content-Type', 'application/pdf');
     }
 }
