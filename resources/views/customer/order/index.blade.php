@@ -29,8 +29,11 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID
                         </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer
-                            Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Merchant
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delivery
+                            Date
+                        </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total
                             Price</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status
@@ -46,38 +49,63 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $o->id }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $o->customer->company_name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ $o->merchant->company_name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ date('d F Y', strtotime($o->delivery_date)) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($o->total_price, 2, ',', '.') }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if ($o->status_id == 1)
-                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                        Unpaid
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-black">
+                                        Order Placed
                                     </span>
-                                @else
+                                @elseif($o->status_id == 2)
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        Order On Progress
+                                    </span>
+                                @elseif($o->status_id == 3)
                                     <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        <a href="">
-                                            Paid
-                                        </a>
+                                        Order Delivered
+                                    </span>
+                                @elseif($o->status_id == 4)
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Order Cancelled
                                     </span>
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @if ($o->invoice == null)
+                                @if ($o->status_id == 1)
                                     <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                        Unpaid
+                                        Invoice Not Available Yet
                                     </span>
-                                @else
+                                @elseif ($o->status_id == 2)
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Invoice Not Available Yet
+                                    </span>
+                                @elseif ($o->status_id == 3)
                                     <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                         <a href="{{ route('viewInvoice', $o->id) }}">
                                             View
                                         </a>
                                     </span>
+                                @elseif ($o->status_id == 4)
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Order Cancelled
+                                    </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <a href="{{ route('customer.order.pay', $o->id) }}"
-                                    class="text-indigo-600 hover:text-indigo-900">Pay Order</a>
+                            <td class="px-6 py-4 whitespace-nowrap flex flex-row gap-2">
+                                <a href="{{ route('customer.order.show', $o->id) }}"
+                                    class="text-black hover:text-blue-700 bg-blue-100 px-2 py-1 rounded-md text-xs font-medium uppercase ">Detail</a>
+                                @if ($o->status_id == 1)
+                                    <form action="{{ route('customer.order.cancel', $o->id) }}" method="POST"
+                                        class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            onclick="return confirm('Are you sure want to cancel this order ?')"
+                                            class="text-black hover:text-red-700 bg-red-100 px-2 py-1 rounded-md text-xs font-medium uppercase ">Cancel</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

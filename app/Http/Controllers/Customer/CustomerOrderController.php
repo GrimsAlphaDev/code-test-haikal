@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Menu;
 use App\Models\Merchant;
 use App\Models\Order;
@@ -23,6 +24,13 @@ class CustomerOrderController extends Controller
         $merchants = Merchant::all();
         $menus = Menu::all();
         return view('customer.order.create', compact('merchants', 'menus'));
+    }
+
+    public function show($id)
+    {
+        $order = Order::with('menus')->findOrFail($id);
+        $totalPrice = 0;
+        return view('customer.order.show', compact('order', 'totalPrice'));
     }
 
     public function store(Request $request)
@@ -94,5 +102,64 @@ class CustomerOrderController extends Controller
         // save pdf to order
         $order->invoice = $pdf_base64;
         $order->save();
+    }
+
+    public function checkout(Request $request)
+    {
+        try {
+            //code...
+
+            // get customer cart
+            $carts = Cart::where('customer_id', auth()->guard('customer')->user()->id)->where('status', 'pending')->get();
+
+            // count total price
+            $totalPrice = 0;
+            foreach ($carts as $cart) {
+                $totalPrice += $cart->menu->price * $cart->quantity;
+            }
+
+
+            $order = new Order();
+            $order->customer_id = auth()->guard('customer')->user()->id;
+            $order->status_id = 1;
+            $order->merchant_id = $carts[0]->merchant_id;
+            $order->delivery_date = $request->delivery_date;
+            $order->total_price = $totalPrice;
+            $order->save();
+
+            foreach ($carts as $cart) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'menu_id' => $cart->menu_id,
+                    'quantity' => $cart->quantity,
+                    'price' => $cart->price,
+                ]);
+                $cart->status = 'completed';
+                $cart->save();
+            }
+
+
+            return redirect()->route('customer.order')->with('success', 'Order created successfully');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('customer.cart')->with('error', 'Failed to create order');
+        }
+    }
+
+    public function cancel($id)
+    {
+        $order = Order::find($id);
+
+        // cart item status to canceled
+        foreach ($order->menus as $menu) {
+            $cart = Cart::where('menu_id', $menu->id)->where('status', 'completed')->first();
+            $cart->status = 'canceled';
+            $cart->save();
+        }
+
+        $order->status_id = 4;
+        $order->save();
+
+        return redirect()->route('customer.order')->with('success', 'Order canceled successfully');
     }
 }

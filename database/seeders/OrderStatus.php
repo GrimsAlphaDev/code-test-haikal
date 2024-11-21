@@ -15,7 +15,6 @@ class OrderStatus extends Seeder
     {
         ModelsOrderStatus::create(['name' => 'Dipesan']);
         ModelsOrderStatus::create(['name' => 'Diproses']);
-        ModelsOrderStatus::create(['name' => 'Dikirim']);
         ModelsOrderStatus::create(['name' => 'Selesai']);
         ModelsOrderStatus::create(['name' => 'Dibatalkan']);
     }

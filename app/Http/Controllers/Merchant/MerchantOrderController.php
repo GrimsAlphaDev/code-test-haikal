@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Merchant;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -34,5 +35,22 @@ class MerchantOrderController extends Controller
         return response($pdf)
             ->header('Content-Type', 'application/pdf');
             
+    }
+
+    public function cancel($id)
+    {
+        $order = Order::find($id);
+
+        // cart item status to canceled
+        foreach ($order->menus as $menu) {
+            $cart = Cart::where('menu_id', $menu->id)->where('status', 'completed')->first();
+            $cart->status = 'canceled';
+            $cart->save();
+        }
+
+        $order->status_id = 4;
+        $order->save();
+
+        return redirect()->route('merchant.order')->with('success', 'Order canceled successfully');
     }
 }

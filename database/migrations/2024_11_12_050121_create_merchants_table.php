@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('merchants', function (Blueprint $table) {
             $table->id();
             $table->string('company_name');
-            $table->string('food_type');
-            $table->string('address');
-            $table->string('city');
-            $table->string('contact');
+            $table->string('food_type')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('contact')->nullable();
             $table->text('description')->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('profile_photo')->nullable();
             $table->timestamps();
         });
     }

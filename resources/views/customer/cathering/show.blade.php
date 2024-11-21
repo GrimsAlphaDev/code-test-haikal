@@ -33,6 +33,19 @@
                         </a>
                         <p class=" font-normal text-gray-700 dark:text-gray-400">{{ $menu->description }}</p>
                         <p class=" font-bold text-gray-700 dark:text-gray-400">Rp {{ number_format($menu->price, 2, ',', '.') }}</p>
+
+                        {{-- button to add to cart --}}
+                        <form action="{{ route('customer.order.addToCart', $menu->id) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="merchant_id" value="{{ $menu->merchant_id }}">
+                            <input type="hidden" name="price" value="{{ $menu->price }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit"
+                                class="mt-3 py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">
+                                Add to Cart
+                            </button>
+                        </form>
+
                     </div>
                 </div>
             @endforeach
@@ -40,32 +53,3 @@
     </div>
 @endsection
 
-@section('scripts')
-    <script>
-        const citySelect = document.getElementById('city');
-        const foodTypeSelect = document.getElementById('food_type');
-        const menuCards = document.querySelectorAll('#menu > div');
-
-        function filterCards() {
-            const selectedCity = citySelect.value;
-            const selectedFoodType = foodTypeSelect.value;
-
-            menuCards.forEach(card => {
-                const cardCity = card.getAttribute('data-city');
-                const cardFoodType = card.getAttribute('data-food-type');
-
-                const cityMatch = selectedCity === '' || cardCity === selectedCity;
-                const foodTypeMatch = selectedFoodType === '' || cardFoodType === selectedFoodType;
-
-                if (cityMatch && foodTypeMatch) {
-                    card.style.display = 'flex'; // Show card
-                } else {
-                    card.style.display = 'none'; // Hide card
-                }
-            });
-        }
-
-        citySelect.addEventListener('change', filterCards);
-        foodTypeSelect.addEventListener('change', filterCards);
-    </script>
-@endsection
