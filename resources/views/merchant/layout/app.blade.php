@@ -17,6 +17,8 @@
         }
         
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     @yield('styles')
 </head>
 
@@ -25,7 +27,7 @@
 
     @include('merchant.layout.sidebar')
 
-
+    @include('merchant.layout.navbar')
     <main class="p-4 sm:ml-64">
         @yield('content')
     </main>
@@ -43,6 +45,37 @@
 
         sidebarToggleClose.addEventListener('click', () => {
             sidebar.classList.toggle('-translate-x-full');
+        });
+    </script>
+    <script>
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebar = document.getElementById('sidebar-multi-level-sidebar');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        const sidebarToggleClose = document.getElementById('sidebar-toggle-close');
+
+        sidebarToggleClose.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+    </script>
+    <script>
+        // Toggle Dropdown
+        document.getElementById('dropdownToggle').addEventListener('click', function() {
+            const dropdown = document.getElementById('dropdownMenu');
+            dropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdownMenu');
+            const toggle = document.getElementById('dropdownToggle');
+
+            if (!dropdown.contains(event.target) && !toggle.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
         });
     </script>
     @yield('scripts')

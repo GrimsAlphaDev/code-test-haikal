@@ -20,6 +20,7 @@ class Merchant extends Authenticatable
         'city',
         'email',
         'password',
+        'profile_photo',
     ];
 
     protected $hidden = [
@@ -39,5 +40,6 @@ class Merchant extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    
     
 }

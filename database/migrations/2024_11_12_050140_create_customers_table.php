@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('company_name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('phone')->nullable();
+            $table->string('city')->nullable();
+            $table->string('address')->nullable();
+            $table->string('profile_photo')->nullable();
             $table->timestamps();
         });
     }

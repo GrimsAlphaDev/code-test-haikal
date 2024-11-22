@@ -10,14 +10,9 @@
 @endsection
 
 @section('content')
-    <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700">Menu</h1>
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-semibold text-gray-700">Customer Order</h1>
 
-        <!-- Modal Trigger Button -->
-        <a href="{{ route('merchant.menu.create') }}"
-            class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 mb-2">
-            Add New Menu
-        </a>
     </div>
     <hr>
 
@@ -51,34 +46,74 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if ($order->status_id == 1)
-                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                        Unpaid
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-black">
+                                        Order Placed
                                     </span>
-                                @else
+                                @elseif($order->status_id == 2)
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        Order On Progress
+                                    </span>
+                                @elseif($order->status_id == 3)
                                     <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        <a href="">
-                                            Paid
-                                        </a>
+                                        Order Delivered
+                                    </span>
+                                @elseif($order->status_id == 4)
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Order Cancelled
                                     </span>
                                 @endif
                             </td>
 
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @if ($order->invoice == null)
-                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                        Unpaid
-                                    </span>
-                                @else
+                                @if ($order->status_id != 4)
                                     <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                        <a href="{{ route('viewInvoice', $order->id) }}">
+                                        <a href="{{ route('merchant.order.viewInvoice', $order->id) }}" target="_blank">
                                             View
                                         </a>
                                     </span>
+                                @elseif ($order->status_id == 4)
+                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Order Cancelled
+                                    </span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-4 whitespace-nowrap flex flex-row gap-2">
                                 <a href="{{ route('merchant.order.show', $order->id) }}"
-                                    class="text-blue-500 hover:text-blue-700">Detail</a>
+                                    class="text-blue-500 hover:text-blue-700 bg-blue-100 px-2 py-1 rounded-md text-xs font-medium uppercase ">Detail</a>
+                                @if ($order->status_id == 1)
+                                    {{-- button to update status to on process --}}
+                                    <form action="{{ route('merchant.order.updateStatus', $order->id) }}" method="POST"
+                                        class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="status_id" value="2">
+                                        <button type="submit"
+                                            onclick="return confirm('Are you sure want to update this order to on process ?')"
+                                            class="hover:text-green-700 bg-green-100 text-green-500 px-2 py-1 rounded-md text-xs font-medium uppercase ">
+                                            Process</button>
+                                    </form>
+                                <form action="{{ route('merchant.order.cancel', $order->id) }}" method="POST"
+                                        class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            onclick="return confirm('Are you sure to cancel {{ $order->customer->company_name }} order?')"
+                                            class=" hover:text-red-700 bg-red-100 text-red-500 px-2 py-1 rounded-md text-xs font-medium uppercase ">Cancel</button>
+                                    </form>
+                                @endif
+                                @if ($order->status_id == 2)
+                                    {{-- button to update status to on process --}}
+                                    <form action="{{ route('merchant.order.updateStatus', $order->id) }}" method="POST"
+                                        class="inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="status_id" value="3">
+                                        <button type="submit"
+                                            onclick="return confirm('Are you sure want to update this order to on process ?')"
+                                            class="hover:text-green-700 bg-green-100 text-green-500 px-2 py-1 rounded-md text-xs font-medium uppercase ">
+                                            Complete Order</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

@@ -1,4 +1,4 @@
-@extends('merchant.layout.app')
+@extends('customer.layout.app')
 
 @section('title')
     Profile
@@ -58,7 +58,7 @@
                         <div class="mt-4 w-full">
                             {{-- check validation error --}}
 
-                            <form action="{{ route('merchant.profile.changePassword') }}" method="POST">
+                            <form action="{{ route('customer.profile.changePassword') }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="mt-4">
@@ -88,7 +88,7 @@
             </div>
             <div class="bg-white p-4 rounded-md shadow-md">
                 <h2 class="text-lg font-semibold text-gray-700">Update Information</h2>
-                <form action="{{ route('merchant.profile.update') }}" method="POST">
+                <form action="{{ route('customer.profile.update') }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mt-4">
@@ -101,15 +101,6 @@
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                     <div class="mt-4">
-                        <label for="food_type" class="text-gray-600">Food Type</label>
-                        <input type="text" name="food_type" id="food_type"
-                            class="w-full border rounded-md p-2 mt-1 @error('food_type') border-red-500 @else border-gray-300 @enderror"
-                            value="{{ $user->food_type }}">
-                    </div>
-                    @error('food_type')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                    <div class="mt-4">
                         <label for="email" class="text-gray-600">Email</label>
                         <input type="email" name="email" id="email"
                             class="w-full border rounded-md p-2 mt-1 @error('email') border-red-500 @else border-gray-300 @enderror"
@@ -119,21 +110,12 @@
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                     <div class="mt-4">
-                        <label for="contact" class="text-gray-600">Contact</label>
-                        <input type="text" name="contact" id="contact"
-                            class="w-full border rounded-md p-2 mt-1 @error('contact') border-red-500 @else border-gray-300 @enderror"
-                            value="{{ $user->contact }}">
+                        <label for="phone" class="text-gray-600">Phone Number</label>
+                        <input type="text" name="phone" id="phone"
+                            class="w-full border rounded-md p-2 mt-1 @error('phone') border-red-500 @else border-gray-300 @enderror"
+                            value="{{ $user->phone }}">
                     </div>
-                    @error('contact')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                    <div class="mt-4">
-                        <label for="description" class="text-gray-600">Description</label>
-                        <textarea name="description" id="description"
-                            class="w-full border rounded-md p-2 mt-1 @error('description') border-red-500 @else border-gray-300 @enderror"
-                            rows="4">{{ $user->description }}</textarea>
-                    </div>
-                    @error('description')
+                    @error('phone')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                     <div class="mt-4">
@@ -177,7 +159,7 @@
                     const formData = new FormData();
                     formData.append('profile_photo', file);
 
-                    fetch("{{ route('merchant.profile.changeImage') }}", {
+                    fetch("{{ route('customer.profile.changeImage') }}", {
                             method: 'POST',
                             body: formData,
                             headers: {
@@ -195,16 +177,19 @@
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
-                                // reload
+                                // reload halaman
                                 setTimeout(() => {
                                     location.reload();
                                 }, 1500);
+
                             } else {
                                 // Tampilkan error
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Gagal',
                                     text: 'Terjadi kesalahan',
+                                    showConfirmButton: false,
+                                    timer: 1500
                                 });
                             }
                         })

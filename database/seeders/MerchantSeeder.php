@@ -15,7 +15,7 @@ class MerchantSeeder extends Seeder
     {
         Merchant::create([
             'company_name' => 'Katering Lezat',
-            'email' => 'lezzat@example.com',
+            'email' => 'kat@gmail.com',
             'food_type' => 'Indonesia',
             'password' => bcrypt('asdasd'),
             'address' => 'Jl. Makanan No. 1, Jakarta',
@@ -26,7 +26,7 @@ class MerchantSeeder extends Seeder
 
         Merchant::create([
             'company_name' => 'Katering Sehat',
-            'email' => 'sehat@example.com',
+            'email' => 'sehat@gmail.com',
             'food_type' => 'Sehat',
             'password' => bcrypt('asdasd'),
             'address' => 'Jl. Sehat No. 2, Jakarta',

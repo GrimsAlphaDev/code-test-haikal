@@ -11,8 +11,13 @@ class CustomerCatheringController extends Controller
 {
     public function index()
     {
+
+        $user = auth()->guard('customer')->user();
+        if($user->phone == '' || $user->city == '' || $user->address == ''){
+            return redirect()->route('customer.profile')->with('info', 'Please complete your profile');
+        }
+
         $catherings = Merchant::all();
-        // from $catherings create distinct food type and city
         $foodTypes = $catherings->pluck('food_type')->unique();
         $cities = $catherings->pluck('city')->unique();
 

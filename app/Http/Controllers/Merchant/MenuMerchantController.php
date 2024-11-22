@@ -11,6 +11,11 @@ class MenuMerchantController extends Controller
     public function index()
     {
         $user = auth()->guard('merchant')->user();
+
+        if($user->food_type == '' || $user->address == '' || $user->city == '' || $user->contact == ''){
+            return redirect()->route('merchant.profile')->with('info', 'Please complete your profile');
+        }
+
         $menus = Menu::where('merchant_id', $user->id)->paginate(8);
 
         return view('merchant.menu.index', compact('menus'));

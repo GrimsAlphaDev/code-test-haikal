@@ -43,7 +43,7 @@ class AuthController extends Controller
             // Regenerasi session
             $request->session()->regenerate();
 
-            return redirect()->route('merchant.menu')->with('success', 'Login successful');
+            return redirect()->route('merchant.dashboard')->with('success', 'Login successful');
         }
 
         $customer = Customer::where('email', $request->email)->first();
@@ -53,7 +53,7 @@ class AuthController extends Controller
             // Regenerasi session
             $request->session()->regenerate();
 
-            return redirect()->route('customer.cathering')->with('success', 'Login successful');
+            return redirect()->route('customer.dashboard')->with('success', 'Login successful');
         }
 
 
@@ -85,32 +85,26 @@ class AuthController extends Controller
             ]
         );
 
-        if ($request->user_type == 'customer') {
+
+        if ($request->user_type == 'customer' || $request->user_type == 'merchant') {
             $data = [
                 'company_name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ];
 
-            $saved = Customer::create($data);
-        } else if ($request->user_type == 'merchant') {
-            $data = [
-                'company_name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ];
+            $saved = $request->user_type == 'merchant' ? Merchant::create($data) : Customer::create($data);
 
-            $saved = Merchant::create($data);
         } else {
             return back()->withInput()->with('error', 'Invalid user type');
         }
 
-        // logged in
-        Auth::login($saved);
 
         if ($request->user_type == 'customer') {
+            Auth::guard('customer')->login($saved);
             return redirect()->route('customer.dashboard')->with('success', 'Registration successful');
         } else if ($request->user_type == 'merchant') {
+            Auth::guard('merchant')->login($saved);
             return redirect()->route('merchant.dashboard')->with('success', 'Registration successful');
         }
     }

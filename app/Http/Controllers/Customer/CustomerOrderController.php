@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Menu;
 use App\Models\Merchant;
 use App\Models\Order;
@@ -18,11 +19,11 @@ class CustomerOrderController extends Controller
         return view('customer.order.index', compact('order'));
     }
 
-    public function create()
+    public function show($id)
     {
-        $merchants = Merchant::all();
-        $menus = Menu::all();
-        return view('customer.order.create', compact('merchants', 'menus'));
+        $order = Order::with('menus')->findOrFail($id);
+        $totalPrice = 0;
+        return view('customer.order.show', compact('order', 'totalPrice'));
     }
 
     public function store(Request $request)
@@ -61,15 +62,56 @@ class CustomerOrderController extends Controller
         return true;
     }
 
-    public function pay($id)
+    public function checkout(Request $request)
     {
-        $order = Order::find($id);
-        $order->status_id = 2;
-        $order->save();
 
-        $this->invoice($id);
+        $request->validate([
+            'delivery_date' => 'required',
+            'delivery_address' => 'required',
+        ]);
+        
+        try {
+            
+            // get customer cart
+            $carts = Cart::where('customer_id', auth()->guard('customer')->user()->id)->where('status', 'pending')->get();
+            
+            // count total price
+            $totalPrice = 0;
+            foreach ($carts as $cart) {
+                $totalPrice += $cart->menu->price * $cart->quantity;
+            }
+            
+            
+            $order = new Order();
+            $order->customer_id = auth()->guard('customer')->user()->id;
+            $order->status_id = 1;
+            $order->merchant_id = $carts[0]->merchant_id;
+            $order->delivery_date = $request->delivery_date;
+            $order->delivery_address = $request->delivery_address;
+            $order->total_price = $totalPrice;
+            $order->save();
 
-        return redirect()->route('customer.order')->with('success', 'Order paid successfully');
+            
+            foreach ($carts as $cart) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'menu_id' => $cart->menu_id,
+                    'quantity' => $cart->quantity,
+                    'price' => $cart->price,
+                ]);
+                $cart->status = 'completed';
+                $cart->save();
+            }
+
+            // create invoice
+            $this->invoice($order->id);
+
+
+            return redirect()->route('customer.order')->with('success', 'Order created successfully');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('customer.cart')->with('error', 'Failed to create order');
+        }
     }
 
     // create pdf invoice
@@ -94,5 +136,31 @@ class CustomerOrderController extends Controller
         // save pdf to order
         $order->invoice = $pdf_base64;
         $order->save();
+}
+
+    public function cancel($id)
+    {
+        $order = Order::find($id);
+
+        // cart item status to canceled
+        foreach ($order->menus as $menu) {
+            $cart = Cart::where('menu_id', $menu->id)->where('status', 'completed')->first();
+            $cart->status = 'canceled';
+            $cart->save();
+        }
+
+        $order->status_id = 4;
+        $order->save();
+
+        return redirect()->route('customer.order')->with('success', 'Order canceled successfully');
+    }
+
+    public function viewInvoice($id)
+    {
+        $order = Order::find($id);
+        // decode base64 to pdf
+        $pdf = base64_decode($order->invoice);
+        return response($pdf)
+            ->header('Content-Type', 'application/pdf');
     }
 }

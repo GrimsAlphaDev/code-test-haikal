@@ -84,10 +84,8 @@
     <div class="invoice-container">
         <div class="invoice-header">
             <div class="company-info">
-                <h2>{{ config('app.name') }}</h2>
+                <h2>Mealmate</h2>
                 <p>Catering Service</p>
-                <p>Address: Jl. Your Company Address</p>
-                <p>Phone: +62 123 4567 890</p>
             </div>
             <div class="invoice-details">
                 <h1>INVOICE</h1>
@@ -98,16 +96,9 @@
 
         <div class="customer-info">
             <div>
-                <h3>Bill To:</h3>
-                <p>{{ $order->customer->name }}</p>
-                <p>{{ $order->customer->email }}</p>
-                <p>{{ $order->customer->phone }}</p>
-            </div>
-            <div>
                 <h3>Delivery Details:</h3>
-                <p>{{ $order->delivery_address }}</p>
+                <p>Delivery Address: {{ $order->delivery_address }}</p>
                 <p>Delivery Date: {{ $order->delivery_date }}</p>
-                <p>Delivery Time: {{ $order->delivery_time }}</p>
             </div>
         </div>
 

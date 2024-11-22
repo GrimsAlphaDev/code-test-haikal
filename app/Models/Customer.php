@@ -17,6 +17,10 @@ class Customer extends Authenticatable
         'company_name',
         'email',
         'password',
+        'phone',
+        'city',
+        'address',
+        'profile_photo',
     ];
 
     protected $hidden = [
@@ -28,5 +32,15 @@ class Customer extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function countCart()
+    {
+        return $this->cart->where('status', 'pending')->count();
     }
 }

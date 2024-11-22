@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CustomerCatheringController;
+use App\Http\Controllers\Customer\CustomerDashboardController;
 use App\Http\Controllers\Customer\CustomerOrderController;
+use App\Http\Controllers\customer\ProfileCustomerController;
 use App\Http\Controllers\Merchant\DashboardMerchantController;
 use App\Http\Controllers\Merchant\MenuMerchantController;
 use App\Http\Controllers\Merchant\MerchantOrderController;
@@ -30,6 +33,8 @@ Route::prefix('merchant')->middleware('merchant')->group(function () {
     // profile Merchant
     Route::get('/profile', [ProfileMerchantController::class, 'index'])->name('merchant.profile');
     Route::put('/profile', [ProfileMerchantController::class, 'update'])->name('merchant.profile.update');
+    Route::post('/profile/changeImage', [ProfileMerchantController::class, 'changeImage'])->name('merchant.profile.changeImage');
+    Route::put('/profile/changePassword', [ProfileMerchantController::class, 'changePassword'])->name('merchant.profile.changePassword');
 
     // menu Merchant
     Route::get('/menu', [MenuMerchantController::class, 'index'])->name('merchant.menu');
@@ -42,18 +47,42 @@ Route::prefix('merchant')->middleware('merchant')->group(function () {
     // order Merchant
     Route::get('/order', [MerchantOrderController::class, 'index'])->name('merchant.order');
     Route::get('/order/{id}', [MerchantOrderController::class, 'show'])->name('merchant.order.show');
-
+    Route::delete('/order/cancel/{id}', [MerchantOrderController::class, 'cancel'])->name('merchant.order.cancel');
+    Route::put('/order/updateStatus/{id}', [MerchantOrderController::class, 'updateStatus'])->name('merchant.order.updateStatus');
+    Route::get('/order/viewInvoice/{id}', [MerchantOrderController::class, 'viewInvoice'])->name('merchant.order.viewInvoice');
+    
 });
-Route::get('/viewInvoice/{id}', [MerchantOrderController::class, 'view'])->name('viewInvoice');
+
+
 
 Route::prefix('customer')->middleware('customer')->group(function () {
+
+    Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');
+
     Route::get('/cathering', [CustomerCatheringController::class, 'index'])->name('customer.cathering');
     Route::get('/cathering/{id}', [CustomerCatheringController::class, 'show'])->name('customer.cathering.show');
 
     Route::get('/order', [CustomerOrderController::class, 'index'])->name('customer.order');
-    Route::get('/order/create', [CustomerOrderController::class, 'create'])->name('customer.order.create');
+    Route::get('/order/{id}', [CustomerOrderController::class, 'show'])->name('customer.order.show');
     Route::post('/order', [CustomerOrderController::class, 'store'])->name('customer.order.store');
-    Route::get('/pay/{id}', [CustomerOrderController::class, 'pay'])->name('customer.order.pay');
+    Route::post('/checkout', [CustomerOrderController::class, 'checkout'])->name('customer.order.checkout');
+    Route::delete('/order/cancel/{id}', [CustomerOrderController::class, 'cancel'])->name('customer.order.cancel');
+    Route::get('/order/viewInvoice/{id}', [CustomerOrderController::class, 'viewInvoice'])->name('customer.order.viewInvoice');
+    
+    // profile Customer
+    Route::get('/profile', [ProfileCustomerController::class, 'index'])->name('customer.profile');
+    Route::put('/profile', [ProfileCustomerController::class, 'update'])->name('customer.profile.update');
+    Route::post('/profile/changeImage', [ProfileCustomerController::class, 'changeImage'])->name('customer.profile.changeImage');
+    Route::put('/profile/changePassword', [ProfileCustomerController::class, 'changePassword'])->name('customer.profile.changePassword');
+
+    // cart
+    Route::get('/cart', [CartController::class, 'index'])->name('customer.cart');
+    Route::post('/addToCart/{id}', [CartController::class, 'addToCart'])->name('customer.order.addToCart');
+    Route::post('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('customer.cart.remove');
+    Route::get('/cart/get', [CartController::class, 'getCart'])->name('customer.cart.get');
+    Route::post('/cart/modifyQuantity/{id}', [CartController::class, 'modifyQuantity'])->name('customer.cart.modifyQuantity');
+    Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('customer.cart.clear');
+    
 
 });
 

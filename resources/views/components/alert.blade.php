@@ -21,3 +21,14 @@
     });
 </script>
 @endif
+@if(session('info'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'info',
+            title: 'Info',
+            text: '{{ session('info') }}'
+        });
+    });
+</script>
+@endif

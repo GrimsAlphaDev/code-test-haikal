@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/output.css') }}">
+    <link rel="icon" href="{{ asset('Images/icon.png') }}" type="image/icon type">
     <title>MealMate</title>
 </head>
 
@@ -103,7 +104,7 @@
                 </div>
             </div>
 
-            <section class="mt-28 bg-gray-50 px-4 sm:px-10 py-12" id="features">
+            <section class="bg-gray-50 px-4 sm:px-10 py-12" id="features">
                 <div class="max-w-7xl mx-auto">
                     <div class="md:text-center max-w-2xl mx-auto">
                         <h2 class="md:text-4xl text-3xl font-bold mb-6">
@@ -164,7 +165,7 @@
                 </div>
             </section>
 
-            <section class="mt-28" id="forOffice">
+            <section class="mt-12" id="forOffice">
                 <div class="md:text-center max-w-2xl mx-auto">
                     <h class="md:text-4xl text-3xl font-bold mb-6">For Office</h>
                     <p>For offices looking to provide lunch services to their employees, MealMate offers a comprehensive
@@ -190,7 +191,7 @@
                 </div>
             </section>
 
-            <section class="mt-28" id="forCath">
+            <section class="mt-12" id="forCath">
                 <div class="md:text-center max-w-2xl mx-auto">
                     <h class="md:text-4xl text-3xl font-bold mb-6">For Merchant</h>
                     <p>For Merchant looking to provide lunch services to their employees, MealMate offers a comprehensive
@@ -220,7 +221,7 @@
 
         </section>
 
-        <footer class="bg-gray-50 px-4 sm:px-10 py-12 mt-28">
+        <footer class="bg-gray-50 px-4 sm:px-10 py-12 mt-12">
             
             <div
                 class="grid max-sm:grid-cols-1 max-xl:grid-cols-2 xl:grid-cols-5 gap-8 border-t border-gray-300 mt-10 pt-8">
