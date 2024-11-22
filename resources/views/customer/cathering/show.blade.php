@@ -47,7 +47,7 @@
                                         -
                                     </button>
                                     <input type="number" name="quantity" value="1" id="quantity" data-id="{{ $menu->id }}"
-                                        class="w-10 px-2 py-1 rounded-none border border-gray-300 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-center"
+                                        class="w-10 px-2 py-1 rounded-none border border-gray-300 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-center lg:w-full"
                                         min="1" max="999" oninput="validity.valid||(value='1');" required>
                                     <button type="button"
                                         class="px-2 py-1 rounded-r-lg border border-gray-300 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
