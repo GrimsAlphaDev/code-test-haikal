@@ -97,7 +97,7 @@
         <div class="customer-info">
             <div>
                 <h3>Delivery Details:</h3>
-                <p>{{ $order->delivery_address }}</p>
+                <p>Delivery Address: {{ $order->delivery_address }}</p>
                 <p>Delivery Date: {{ $order->delivery_date }}</p>
             </div>
         </div>

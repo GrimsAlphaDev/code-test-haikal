@@ -72,6 +72,7 @@
                         <label for="delivery_date" class="text-sm font-semibold text-gray-700">Delivery Date</label>
                         <input type="date" name="delivery_date" id="delivery_date" class="w-full p-2 border border-gray-200 rounded-lg"
                             required min="{{ date('Y-m-d') }}">
+                        <input type="hidden" name="delivery_address" value="{{ auth()->guard('customer')->user()->address }}">
                     </div>
                     <button type="submit"
                     class=" flex bg-blue-500 hover:bg-blue-700 justify-center w-24 text-white font-bold py-2 px-4 rounded">Checkout</button>

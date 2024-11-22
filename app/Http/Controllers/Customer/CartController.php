@@ -54,19 +54,20 @@ class CartController extends Controller
             ->where('status', 'pending')
             ->first();
 
-        if ($cart) {
-            $cart->quantity += $request->quantity;
-            $cart->price += $request->price;
-            $cart->save();
-
-            return redirect()->route('customer.cathering.show', $request->merchant_id)->with('success', 'Menu added to cart');
-        } else {
+            
+            if ($cart) {
+                $cart->quantity += $request->quantity;
+                $cart->price += $request->price;
+                $cart->save();
+                
+                return redirect()->route('customer.cathering.show', $request->merchant_id)->with('success', 'Menu added to cart');
+            } else {
             Cart::create([
                 'customer_id' => auth()->guard('customer')->user()->id,
                 'merchant_id' => $request->merchant_id,
                 'menu_id' => $id_menu,
                 'quantity' => $request->quantity,
-                'price' => $request->price,
+                'price' => $request->price * $request->quantity,
                 'status' => 'pending',
             ]);
             return redirect()->route(

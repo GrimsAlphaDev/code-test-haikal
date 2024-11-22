@@ -10,14 +10,8 @@
 @endsection
 
 @section('content')
-    <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700">Order</h1>
-
-        <!-- Modal Trigger Button -->
-        <a href="{{ route('customer.order.create') }}"
-            class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 mb-2">
-            Add New Order
-        </a>
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-semibold text-gray-700">Cathering Order</h1>
     </div>
     <hr>
 
@@ -73,11 +67,7 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @if ($o->status_id == 1)
-                                    <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                        Invoice Not Available Yet
-                                    </span>
-                                @elseif ($o->status_id == 2 || $o->status_id == 3)
+                                @if ($o->status_id != 4)
                                     <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                         <a href="{{ route('customer.order.viewInvoice', $o->id) }}" target="_blank">
                                             View
@@ -94,7 +84,7 @@
                                     class="text-black hover:text-blue-700 bg-blue-100 px-2 py-1 rounded-md text-xs font-medium uppercase ">Detail</a>
 
                                 @if ($o->status_id == 1)
-                                <form action="{{ route('customer.order.cancel', $o->id) }}" method="POST"
+                                    <form action="{{ route('customer.order.cancel', $o->id) }}" method="POST"
                                         class="inline">
                                         @csrf
                                         @method('DELETE')

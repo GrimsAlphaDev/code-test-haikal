@@ -37,7 +37,11 @@
                 <!-- Dropdown Menu -->
                 <div id="dropdownMenu" class="absolute right-0 mt-8 w-48 bg-white rounded-md shadow-lg z-20 hidden">
                     <div class="py-1">
-                        <a href="{{ route('login') }}" onclick="return confirm('Are you sure you want to logout?')"
+                        <a href="{{ route('customer.profile') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
+                            <i class="mr-2 fas fa-user"></i> Profile
+                        </a>
+                        <a href="{{ route('logout') }}" onclick="return confirm('Are you sure you want to logout?')"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             <i class="mr-2 fas fa-sign-out-alt"></i> Logout
                         </a>

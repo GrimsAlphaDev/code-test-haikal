@@ -15,8 +15,9 @@ class Order extends Model
         'status_id',
         'delivery_date',
         'merchant_id',
-        'payment_proof',
         'total_price',
+        'invoice',
+        'delivery_address',
     ];
 
     // Relasi dengan tabel customers

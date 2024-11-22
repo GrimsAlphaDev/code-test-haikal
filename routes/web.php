@@ -5,6 +5,7 @@ use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CustomerCatheringController;
 use App\Http\Controllers\Customer\CustomerDashboardController;
 use App\Http\Controllers\Customer\CustomerOrderController;
+use App\Http\Controllers\customer\ProfileCustomerController;
 use App\Http\Controllers\Merchant\DashboardMerchantController;
 use App\Http\Controllers\Merchant\MenuMerchantController;
 use App\Http\Controllers\Merchant\MerchantOrderController;
@@ -62,13 +63,17 @@ Route::prefix('customer')->middleware('customer')->group(function () {
     Route::get('/cathering/{id}', [CustomerCatheringController::class, 'show'])->name('customer.cathering.show');
 
     Route::get('/order', [CustomerOrderController::class, 'index'])->name('customer.order');
-    Route::get('/order/create', [CustomerOrderController::class, 'create'])->name('customer.order.create');
     Route::get('/order/{id}', [CustomerOrderController::class, 'show'])->name('customer.order.show');
     Route::post('/order', [CustomerOrderController::class, 'store'])->name('customer.order.store');
     Route::post('/checkout', [CustomerOrderController::class, 'checkout'])->name('customer.order.checkout');
     Route::delete('/order/cancel/{id}', [CustomerOrderController::class, 'cancel'])->name('customer.order.cancel');
     Route::get('/order/viewInvoice/{id}', [CustomerOrderController::class, 'viewInvoice'])->name('customer.order.viewInvoice');
     
+    // profile Customer
+    Route::get('/profile', [ProfileCustomerController::class, 'index'])->name('customer.profile');
+    Route::put('/profile', [ProfileCustomerController::class, 'update'])->name('customer.profile.update');
+    Route::post('/profile/changeImage', [ProfileCustomerController::class, 'changeImage'])->name('customer.profile.changeImage');
+    Route::put('/profile/changePassword', [ProfileCustomerController::class, 'changePassword'])->name('customer.profile.changePassword');
 
     // cart
     Route::get('/cart', [CartController::class, 'index'])->name('customer.cart');

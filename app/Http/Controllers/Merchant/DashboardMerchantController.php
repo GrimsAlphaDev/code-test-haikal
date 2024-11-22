@@ -12,6 +12,11 @@ class DashboardMerchantController extends Controller
     public function index()
     {
 
+        $user = auth()->guard('merchant')->user();
+        if($user->food_type == '' || $user->address == '' || $user->city == '' || $user->contact == ''){
+            return redirect()->route('merchant.profile')->with('info', 'Please complete your profile');
+        }
+
         $orderData = Order::selectRaw('MONTH(created_at) as month, COUNT(*) as total_orders')
             ->where('status_id', 3)
             ->whereYear('created_at', now()->year)
@@ -27,7 +32,7 @@ class DashboardMerchantController extends Controller
             ->get();
 
         $countOrder = Order::selectRaw('COUNT(*) as total_orders')
-            ->where('status_id', '!=', 4)
+            ->where('status_id', 1)
             ->whereYear('created_at', now()->year)
             ->first();
 

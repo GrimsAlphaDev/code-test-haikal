@@ -22,7 +22,7 @@
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             <i class="mr-2 fas fa-user"></i> Profile
                         </a>
-                        <a href="{{ route('login') }}" onclick="return confirm('Are you sure you want to logout?')"
+                        <a href="{{ route('logout') }}" onclick="return confirm('Are you sure you want to logout?')"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                             <i class="mr-2 fas fa-sign-out-alt"></i> Logout
                         </a>

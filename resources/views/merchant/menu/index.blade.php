@@ -40,12 +40,19 @@
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $menu->description }}</p>
                         <p class="mb-3 font-bold text-gray-700 dark:text-gray-400">Rp
                             {{ number_format($menu->price, 2, ',', '.') }}</p>
-                        <div class="mt-auto flex items-center justify-between">
-                            <a href="{{ route('merchant.menu.edit', $menu->id) }}" class="text-blue-500 hover:text-blue-700">Edit</a>
+                        <div class="mt-auto flex items-center justify-between w-full">
+                            <a href="{{ route('merchant.menu.edit', $menu->id) }}"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+                                Edit
+                            </a>
                             <form action="{{ route('merchant.menu.delete', $menu->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-700" onclick="return confirm('Are You Sure ?')">Delete</button>
+                                <button type="submit"
+                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+                                    onclick="return confirm('Are You Sure ?')">
+                                    Delete
+                                </button>
                             </form>
                         </div>
                     </div>

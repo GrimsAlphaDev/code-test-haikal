@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Merchant;
+namespace App\Http\Controllers\customer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Merchant;
+use App\Models\Customer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
-class ProfileMerchantController extends Controller
+class ProfileCustomerController extends Controller
 {
     public function index()
     {
-        $user = auth()->guard('merchant')->user();
-        return view('merchant.profile.index', compact('user'));
+        $user = auth()->guard('customer')->user();
+        return view('customer.profile.index', compact('user'));
     }
 
     public function update(Request $request)
@@ -20,35 +19,31 @@ class ProfileMerchantController extends Controller
 
         $request->validate([
             'company_name' => 'required',
-            'food_type' => 'required',
-            'address' => 'required',
-            'contact' => 'required',
-            'description' => 'required',
-            'email' => 'required|email|unique:merchants,email,' . auth()->guard('merchant')->user()->id,
+            'email' => 'required|email|unique:customers,email,' . auth()->guard('customer')->user()->id,
+            'phone' => 'required',
             'city' => 'required',
+            'address' => 'required',
         ]);
 
-        $user = auth()->guard('merchant')->user();
-        $merchant = Merchant::find($user->id);
-        if (!$merchant) {
-            return redirect()->route('merchant.profile')->with('error', 'Merchant not found');
+        $user = auth()->guard('customer')->user();
+        $customer = Customer::find($user->id);
+        if (!$customer) {
+            return redirect()->route('customer.profile')->with('error', 'Customer not found');
         }
-        $merchant->update([
+        $customer->update([
             'company_name' => $request->company_name,
-            'food_type' => $request->food_type,
-            'address' => $request->address,
-            'contact' => $request->contact,
-            'description' => $request->description,
             'email' => $request->email,
+            'phone' => $request->phone,
             'city' => $request->city,
+            'address' => $request->address,
         ]);
 
-        return redirect()->route('merchant.profile')->with('success', 'Profile updated successfully');
+        return redirect()->route('customer.profile')->with('success', 'Profile updated successfully');
     }
 
     public function changeImage(Request $request)
     {
-        $user = auth()->guard('merchant')->user();
+        $user = auth()->guard('customer')->user();
         // update profile photo
         if ($request->hasFile('profile_photo')) {
             $request->validate([
@@ -67,8 +62,8 @@ class ProfileMerchantController extends Controller
             $image->move(public_path('images/profile_image/'), $imageName);
 
             try {
-                $merchant = Merchant::find($user->id);
-                $merchant->update([
+                $customer = Customer::find($user->id);
+                $customer->update([
                     'profile_photo' => $imageName,
                 ]);
 
@@ -97,16 +92,15 @@ class ProfileMerchantController extends Controller
             'password_confirmation' => 'required|same:password',
         ]);
 
-        $user = auth()->guard('merchant')->user();
-        $merchant = Merchant::find($user->id);
-        if (!$merchant) {
-            return redirect()->route('merchant.profile')->with('error', 'Merchant not found');
+        $user = auth()->guard('customer')->user();
+        $customer = Customer::find($user->id);
+        if (!$customer) {
+            return redirect()->route('customer.profile')->with('error', 'Customer not found');
         }
-        $merchant->update([
+        $customer->update([
             'password' => bcrypt($request->password),
         ]);
 
-        return redirect()->route('merchant.profile')->with('success', 'Password updated successfully');
+        return redirect()->route('customer.profile')->with('success', 'Password updated successfully');
     }
-
 }

@@ -13,12 +13,12 @@
     <div class="mt-4">
         <div class="grid grid-cols-1 gap-4">
             <div class="bg-white p-4 rounded-md shadow-md">
-                <div class="grid grid-cols-4 gap-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
                     <div class="bg-green-200 p-4 rounded-md shadow-md">
                         <div class="flex items center justify-between">
                             <div>
                                 <h2 class="text-lg font-semibold text-gray-700">Total Order</h2>
-                                <p class="text-sm text-gray-500">Number of order that have been made</p>
+                                <p class="text-sm text-gray-500">Number of order that have been placed</p>
                             </div>
                             <div class="content-center">
                                 <h2 class="text-4xl font-semibold text-gray-700">{{ $countOrder->total_orders }}</h2>
@@ -40,7 +40,7 @@
                         <div class="flex items center justify-between">
                             <div>
                                 <h2 class="text-lg font-semibold text-gray-700">Proccecing Order</h2>
-                                <p class="text-sm text-gray-500">Number of orders that have been processed</p>
+                                <p class="text-sm text-gray-500">Number of orders that currently being processed</p>
                             </div>
                             <div class="content-center">
                                 <h2 class="text-4xl font-semibold text-gray-700">{{ $countProcessed->total_orders }}</h2>
@@ -65,7 +65,7 @@
     </div>
 
     <div class="mt-4">
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div class="bg-white p-4 rounded-md shadow-md">
                 <h2 class="text-xl font-semibold mb-4">Order Completed Yearly</h2>
                 <canvas id="orderChart" width="300" height="150"></canvas>
